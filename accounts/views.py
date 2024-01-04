@@ -19,13 +19,19 @@ class UserRegistrationView(FormView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
+        messages.success(self.request, 'Account Created Successfully.')
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request, 'something wrong please try again.')
+        return super().form_invalid(form)
     
 # User Login View
 class UserLoginView(LoginView):
     template_name = 'accounts/user_login.html'
-
+   
     def get_success_url(self):
+        messages.success(self.request, 'logged in successfully')
         return reverse_lazy('home')
     
 class UserLogoutView(View):
@@ -33,6 +39,7 @@ class UserLogoutView(View):
     def get(self,request):
         if request.user.is_authenticated:
             logout(request)
+            messages.success(self.request, 'user logged in successful')
             return redirect('home')
         
 class UserBankAccountUpdateView(View):

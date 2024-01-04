@@ -9,7 +9,7 @@ class UserBankAccount(models.Model):
     account_type = models.CharField(max_length=100, choices= ACCOUNT_TYPE)
     gender = models.CharField(max_length=100,choices = GENDER_TYPE)
     balance = models.DecimalField(default=0, max_digits=12, decimal_places = 2)
-    birth_date = models.DateField()
+    birth_date = models.DateField(null = True, blank = True)
     account_created_at = models.DateField(auto_now_add = True)
     is_bankrupt = models.BooleanField(default=False)
     def __str__(self):
